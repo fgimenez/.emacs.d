@@ -35,3 +35,5 @@
 
 (require 'auto-complete)
 (global-auto-complete-mode t)
+
+(add-hook 'after-init-hook #'global-flycheck-mode)
