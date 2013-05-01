@@ -10,7 +10,7 @@
 ;;(add-hook 'php-mode-hook (lambda () (setq tab-width 2)))
 
 (require 'package)
-(setq package-list '(auto-complete haml-mode magit php-mode rsense jump inflections findr ruby-mode web-mode yaml-mode flymake-easy flymake-jshint flymake-jslint flymake-php flymake-phpcs flymake-ruby))
+(setq package-list '(auto-complete haml-mode magit php-mode rsense jump inflections findr ruby-mode web-mode yaml-mode flycheck))
 (setq package-archives '(("elpa" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
@@ -35,5 +35,3 @@
 
 (require 'auto-complete)
 (global-auto-complete-mode t)
-
-(load "~/.emacs.d/flymake/index")
