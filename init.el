@@ -10,7 +10,7 @@
 ;;(add-hook 'php-mode-hook (lambda () (setq tab-width 2)))
 
 (require 'package)
-(setq package-list '(auto-complete haml-mode magit php-mode php-extras rsense jump inflections findr ruby-mode web-mode yaml-mode flycheck feature-mode scala-mode2))
+(setq package-list '(auto-complete haml-mode magit php-mode php-extras rsense jump inflections findr ruby-mode web-mode yaml-mode flycheck feature-mode scala-mode2 markdown-mode))
 (setq package-archives '(("elpa" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
@@ -38,6 +38,8 @@
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.haml$" . haml-mode))
+(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 
 (require 'auto-complete)
 (global-auto-complete-mode t)
