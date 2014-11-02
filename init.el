@@ -4,13 +4,9 @@
 (setq-default tab-width 2)
 (setq tab-stop-list (number-sequence 2 200 2))
 (setq indent-line-function 'insert-tab)
-;;(setq c-basic-offset 2)
-;;(setq c-basic-indent 2)
-;;(add-hook 'php-mode-hook (lambda () (setq indent-tabs-mode nil)))
-;;(add-hook 'php-mode-hook (lambda () (setq tab-width 2)))
 
 (require 'package)
-(setq package-list '(auto-complete haml-mode magit php-mode php-extras rsense jump inflections findr ruby-mode web-mode yaml-mode flycheck feature-mode scala-mode2 markdown-mode json-mode go-mode))
+(setq package-list '(auto-complete haml-mode magit php-mode php-extras rsense jump inflections findr ruby-mode web-mode yaml-mode flycheck feature-mode scala-mode2 markdown-mode json-mode go-mode go-autocomplete))
 (setq package-archives '(("elpa" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
@@ -43,9 +39,15 @@
 (add-to-list 'auto-mode-alist '("\\.go" . go-mode))
 
 (require 'auto-complete)
+(require 'go-autocomplete)
+
 (global-auto-complete-mode t)
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
-(column-number-mode)
+(defun my-go-mode-hook ()
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  (local-set-key (kbd "M-.") 'godef-jump))
+(add-hook 'go-mode-hook 'my-go-mode-hook)
 
+(column-number-mode)
