@@ -1,3 +1,6 @@
+;;; package --- Summary
+;;; Code:
+;;; Commentary:
 (global-font-lock-mode 1)
 
 (setq-default indent-tabs-mode nil)
@@ -6,6 +9,7 @@
 (setq indent-line-function 'insert-tab)
 
 (require 'package)
+(defvar package-list)
 (setq package-list '(auto-complete haml-mode magit php-mode php-extras rsense jump inflections findr ruby-mode web-mode yaml-mode flycheck feature-mode scala-mode2 markdown-mode json-mode go-mode go-autocomplete))
 (setq package-archives '(("elpa" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
@@ -46,8 +50,19 @@
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 (defun my-go-mode-hook ()
+  ; Use goimports instead of go-fmt
+  (setq gofmt-command "goimports")
+  ; Call Gofmt before saving
   (add-hook 'before-save-hook 'gofmt-before-save)
+  ; Godef jump key binding
   (local-set-key (kbd "M-.") 'godef-jump))
+  ; Customize compile command to run go build
+  (if (not (string-match "go" compile-command))
+      (set (make-local-variable 'compile-command)
+           "go build -v && go test -v && go vet"))
 (add-hook 'go-mode-hook 'my-go-mode-hook)
 
 (column-number-mode)
+
+(provide 'init)
+;;; init.el ends here
