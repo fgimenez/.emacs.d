@@ -10,7 +10,7 @@
 
 (require 'package)
 (defvar package-list)
-(setq package-list '(auto-complete magit jump inflections findr flycheck feature-mode markdown-mode go-mode go-autocomplete))
+(setq package-list '(auto-complete magit jump inflections findr flycheck feature-mode markdown-mode go-mode go-autocomplete golint))
 (setq package-archives '(("elpa" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
