@@ -10,7 +10,7 @@
 
 (require 'package)
 (defvar package-list)
-(setq package-list '(auto-complete haml-mode magit php-mode php-extras rsense jump inflections findr ruby-mode web-mode yaml-mode flycheck feature-mode scala-mode2 markdown-mode json-mode go-mode go-autocomplete))
+(setq package-list '(auto-complete haml-mode magit php-mode php-extras rsense jump inflections findr ruby-mode web-mode yaml-mode flycheck feature-mode scala-mode2 markdown-mode json-mode go-mode go-autocomplete elpy))
 (setq package-archives '(("elpa" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
@@ -44,6 +44,7 @@
 
 (require 'auto-complete)
 (require 'go-autocomplete)
+(elpy-enable)
 
 (global-auto-complete-mode t)
 
