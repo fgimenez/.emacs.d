@@ -5,3 +5,4 @@ auto-save-list
 url
 tramp
 flycheck-init.el
+.python-environments
