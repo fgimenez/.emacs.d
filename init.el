@@ -10,7 +10,7 @@
 
 (require 'package)
 (defvar package-list)
-(setq package-list '(auto-complete haml-mode magit php-mode php-extras rsense jump inflections findr ruby-mode web-mode yaml-mode flycheck feature-mode scala-mode2 markdown-mode json-mode go-mode go-autocomplete jedi))
+(setq package-list '(auto-complete magit jump inflections findr ruby-mode web-mode yaml-mode flycheck feature-mode markdown-mode json-mode go-mode go-autocomplete jedi virtualenvwrapper))
 (setq package-archives '(("elpa" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
@@ -33,11 +33,8 @@
 (add-to-list 'auto-mode-alist '("Thorfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.rhtml$" . html-mode))
-(add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
-(add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
-(add-to-list 'auto-mode-alist '("\\.haml$" . haml-mode))
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.go" . go-mode))
@@ -48,7 +45,11 @@
 (global-auto-complete-mode t)
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
+
 (add-hook 'python-mode-hook 'jedi:setup)
+(require 'virtualenvwrapper)
+(venv-initialize-interactive-shells)
+(setq venv-location "~/.virtualenvs/")
 
 (defun my-go-mode-hook ()
   ; Use goimports instead of go-fmt
