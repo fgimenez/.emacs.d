@@ -49,7 +49,7 @@
 (add-hook 'python-mode-hook 'jedi:setup)
 (require 'virtualenvwrapper)
 (venv-initialize-interactive-shells)
-(setq venv-location "~/.virtualenvs/")
+(setq venv-location "~/workspace/")
 
 (defun my-go-mode-hook ()
   ; Use goimports instead of go-fmt
