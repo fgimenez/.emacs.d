@@ -10,7 +10,7 @@
 
 (require 'package)
 (defvar package-list)
-(setq package-list '(auto-complete magit jump inflections findr ruby-mode web-mode yaml-mode flycheck feature-mode markdown-mode json-mode go-mode go-autocomplete jedi virtualenvwrapper))
+(setq package-list '(auto-complete magit jump inflections findr ruby-mode web-mode yaml-mode flycheck feature-mode markdown-mode json-mode go-mode go-autocomplete jedi))
 (setq package-archives '(("elpa" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
@@ -47,9 +47,11 @@
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 (add-hook 'python-mode-hook 'jedi:setup)
-(require 'virtualenvwrapper)
-(venv-initialize-interactive-shells)
-(setq venv-location "~/workspace/")
+(setq jedi:complete-on-dot t)
+(make-directory "~/.virtualenvs" t)
+(setq jedi:environment-root "~/.virtualenvs/python3-base")
+(setq jedi:environment-virtualenv
+      (list "virtualenv" "-p" "/usr/bin/python3" "--system-site-packages"))
 
 (defun my-go-mode-hook ()
   ; Use goimports instead of go-fmt
