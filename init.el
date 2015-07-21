@@ -66,6 +66,8 @@
            "go build -v && go test -v && go vet"))
 (add-hook 'go-mode-hook 'my-go-mode-hook)
 
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 (column-number-mode)
 
 (provide 'init)
