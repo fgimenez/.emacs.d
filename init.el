@@ -8,9 +8,11 @@
 (setq tab-stop-list (number-sequence 2 200 2))
 (setq indent-line-function 'insert-tab)
 
+(setq-default yaml-indent-offset 4)
+
 (require 'package)
 (defvar package-list)
-(setq package-list '(auto-complete magit jump inflections findr ruby-mode web-mode yaml-mode flycheck feature-mode markdown-mode json-mode go-mode go-autocomplete jedi dockerfile-mode clojure-mode cider))
+(setq package-list '(auto-complete magit jump inflections findr ruby-mode web-mode yaml-mode flycheck feature-mode markdown-mode json-mode go-mode go-autocomplete jedi dockerfile-mode clojure-mode cider tuareg merlin flycheck-ocaml))
 (setq package-archives '(("elpa" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
@@ -39,6 +41,7 @@
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.go" . go-mode))
 (add-to-list 'auto-mode-alist '("Dockerfile$" . dockerfile-mode))
+(add-to-list 'auto-mode-alist '("\\.ml" . tuareg-mode))
 
 (require 'auto-complete)
 (require 'go-autocomplete)
@@ -70,6 +73,33 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (column-number-mode)
+
+(let ((opam-share (ignore-errors (car (process-lines "opam" "config" "var" "share")))))
+  (when (and opam-share (file-directory-p opam-share))
+    (add-to-list 'load-path (expand-file-name "emacs/site-lisp" opam-share))
+    (autoload 'merlin-mode "merlin" nil t nil)
+    (add-hook 'tuareg-mode-hook 'merlin-mode t)
+    (add-hook 'caml-mode-hook 'merlin-mode t)))
+(add-hook 'tuareg-mode-hook 'merlin-mode)
+(setq merlin-use-auto-complete-mode t)
+(add-hook 'tuareg-mode-hook
+          (lambda ()
+            (make-local-variable 'ac-ignores)
+            (setq ac-ignores
+                  (append '("and" "as" "assert" "begin" "class"
+                            "constraint" "do" "done" "downto"
+                            "else" "end" "exception" "external"
+                            "false" "for" "fun" "function"
+                            "functor" "if" "in" "include"
+                            "inherit" "initializer" "lazy" "let"
+                            "match" "method" "module" "mutable"
+                            "new" "object" "of" "open" "or"
+                            "private" "rec" "sig" "struct"
+                            "then" "to" "true" "try" "type"
+                            "val" "virtual" "when" "while"
+                            "with" "mod" "land" "lor" "lxor"
+                            "lsl" "lsr" "asr")
+                          ac-ignores))))
 
 (provide 'init)
 ;;; init.el ends here
