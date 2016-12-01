@@ -74,32 +74,47 @@
 
 (column-number-mode)
 
-(let ((opam-share (ignore-errors (car (process-lines "opam" "config" "var" "share")))))
-  (when (and opam-share (file-directory-p opam-share))
-    (add-to-list 'load-path (expand-file-name "emacs/site-lisp" opam-share))
-    (autoload 'merlin-mode "merlin" nil t nil)
-    (add-hook 'tuareg-mode-hook 'merlin-mode t)
-    (add-hook 'caml-mode-hook 'merlin-mode t)))
-(add-hook 'tuareg-mode-hook 'merlin-mode)
-(setq merlin-use-auto-complete-mode t)
-(add-hook 'tuareg-mode-hook
-          (lambda ()
-            (make-local-variable 'ac-ignores)
-            (setq ac-ignores
-                  (append '("and" "as" "assert" "begin" "class"
-                            "constraint" "do" "done" "downto"
-                            "else" "end" "exception" "external"
-                            "false" "for" "fun" "function"
-                            "functor" "if" "in" "include"
-                            "inherit" "initializer" "lazy" "let"
-                            "match" "method" "module" "mutable"
-                            "new" "object" "of" "open" "or"
-                            "private" "rec" "sig" "struct"
-                            "then" "to" "true" "try" "type"
-                            "val" "virtual" "when" "while"
-                            "with" "mod" "land" "lor" "lxor"
-                            "lsl" "lsr" "asr")
-                          ac-ignores))))
+;; OCaml code
+(add-hook
+ 'tuareg-mode-hook
+ (lambda ()
+   ;; Add opam emacs directory to the load-path
+   (setq opam-share
+         (substring
+          (shell-command-to-string "opam config var share 2> /dev/null")
+          0 -1))
+   (add-to-list 'load-path (concat opam-share "/emacs/site-lisp"))
+   ;; Load merlin-mode
+   (require 'merlin)
+   ;; Start merlin on ocaml files
+   (add-hook 'tuareg-mode-hook 'merlin-mode t)
+   (add-hook 'caml-mode-hook 'merlin-mode t)
+   ;; Enable auto-complete
+   (setq merlin-use-auto-complete-mode 'easy)
+   ;; Use opam switch to lookup ocamlmerlin binary
+   (setq merlin-command 'opam)
+   (company-mode)
+   (require 'ocp-indent)
+   (autoload 'utop-minor-mode "utop" "Minor mode for utop" t)
+   (autoload 'utop-setup-ocaml-buffer "utop" "Toplevel for OCaml" t)
+   (autoload 'merlin-mode "merlin" "Merlin mode" t)
+   (utop-minor-mode)
+   (company-quickhelp-mode)
+   ;; Important to note that setq-local is a macro and it needs to be
+   ;; separate calls, not like setq
+   (setq-local merlin-completion-with-doc t)
+   (setq-local indent-tabs-mode nil)
+   (setq-local show-trailing-whitespace t)
+   (setq-local indent-line-function 'ocp-indent-line)
+   (setq-local indent-region-function 'ocp-indent-region)
+   (if (equal system-type 'darwin)
+       (load-file "/Users/Edgar/.opam/working/share/emacs/site-lisp/ocp-indent.el")
+     (load-file "/home/gar/.opam/working/share/emacs/site-lisp/ocp-indent.el"))
+   (merlin-mode)))
+
+(add-hook 'utop-mode-hook (lambda ()
+                            (set-process-query-on-exit-flag
+                                  (get-process "utop") nil)))
 
 (provide 'init)
 ;;; init.el ends here
