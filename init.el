@@ -8,7 +8,7 @@
 (setq tab-stop-list (number-sequence 2 200 2))
 (setq indent-line-function 'insert-tab)
 
-(setq-default yaml-indent-offset 4)
+(setq-default yaml-indent-offset 2)
 
 (require 'package)
 (defvar package-list)
