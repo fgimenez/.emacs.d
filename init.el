@@ -9,6 +9,7 @@
 (setq indent-line-function 'insert-tab)
 
 (setq-default yaml-indent-offset 2)
+(setq-default js-indent-level 2)
 
 (require 'package)
 (defvar package-list)
