@@ -11,6 +11,11 @@
 (setq-default yaml-indent-offset 2)
 (setq-default js-indent-level 2)
 
+(setq solidity-solc-path "/usr/bin/solc")
+(setq solidity-flycheck-solc-checker-active t)
+(setq solidity-solium-path "/usr/bin/solium")
+(setq solidity-flycheck-solium-checker-active t)
+
 (require 'package)
 (defvar package-list)
 (setq package-list '(auto-complete magit jump inflections findr ruby-mode web-mode yaml-mode flycheck feature-mode markdown-mode json-mode go-mode go-autocomplete jedi dockerfile-mode terraform-mode solidity-mode))
@@ -45,6 +50,7 @@
 
 (require 'auto-complete)
 (require 'go-autocomplete)
+(require 'solidity-mode)
 
 (global-auto-complete-mode t)
 
