@@ -18,7 +18,7 @@
 
 (require 'package)
 (defvar package-list)
-(setq package-list '(auto-complete magit jump inflections findr ruby-mode web-mode yaml-mode flycheck feature-mode markdown-mode json-mode go-mode go-autocomplete jedi dockerfile-mode terraform-mode solidity-mode))
+(setq package-list '(auto-complete magit jump inflections findr ruby-mode web-mode yaml-mode flycheck feature-mode markdown-mode json-mode go-mode go-autocomplete jedi dockerfile-mode terraform-mode solidity-mode rust-mode flycheck-rust))
 (setq package-archives '(("elpa" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
@@ -75,6 +75,9 @@
       (set (make-local-variable 'compile-command)
            "go build -v && go test -v && go vet"))
 (add-hook 'go-mode-hook 'my-go-mode-hook)
+
+(with-eval-after-load 'rust-mode
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
