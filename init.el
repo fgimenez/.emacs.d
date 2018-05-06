@@ -15,6 +15,7 @@
 (setq solidity-flycheck-solc-checker-active t)
 (setq solidity-solium-path "/usr/bin/solium")
 (setq solidity-flycheck-solium-checker-active t)
+(setq flycheck-solidity-solium-soliumrcfile "/home/fgimenez/.soliumrc.json")
 
 (require 'package)
 (defvar package-list)
