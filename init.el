@@ -13,7 +13,7 @@
 
 (setq solidity-solc-path "/usr/bin/solc")
 (setq solidity-flycheck-solc-checker-active t)
-(setq solidity-solium-path "/usr/bin/solium")
+(setq solidity-solium-path "/home/fgimenez/.nvm/versions/node/v8.0.0/bin/solium")
 (setq solidity-flycheck-solium-checker-active t)
 (setq flycheck-solidity-solium-soliumrcfile "/home/fgimenez/.soliumrc.json")
 
@@ -87,3 +87,17 @@
 
 (provide 'init)
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (yaml-mode web-mode solidity-mode racer markdown-mode magit jump json-mode jedi go-mode go-autocomplete flycheck-rust feature-mode dockerfile-mode company))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
