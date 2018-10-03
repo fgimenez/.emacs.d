@@ -19,7 +19,7 @@
 
 (require 'package)
 (defvar package-list)
-(setq package-list '(auto-complete magit jump inflections findr web-mode yaml-mode flycheck feature-mode markdown-mode json-mode go-mode go-autocomplete jedi dockerfile-mode solidity-mode rust-mode flycheck-rust racer company))
+(setq package-list '(auto-complete magit jump inflections findr web-mode yaml-mode flycheck feature-mode markdown-mode json-mode go-mode go-autocomplete jedi dockerfile-mode solidity-mode rust-mode flycheck-rust racer company terraform-mode))
 (setq package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")
                          ("elpa" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
@@ -36,9 +36,10 @@
 (add-to-list 'auto-mode-alist '("\\.rhtml$" . html-mode))
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yaml\\." . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.go" . go-mode))
+(add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
 (add-to-list 'auto-mode-alist '("Dockerfile$" . dockerfile-mode))
 
 (require 'auto-complete)
@@ -94,7 +95,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (yaml-mode web-mode solidity-mode racer markdown-mode magit jump json-mode jedi go-mode go-autocomplete flycheck-rust feature-mode dockerfile-mode company))))
+    (terraform-mode yaml-mode web-mode solidity-mode racer markdown-mode magit jump json-mode jedi go-mode go-autocomplete flycheck-rust feature-mode dockerfile-mode company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
