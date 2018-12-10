@@ -99,6 +99,13 @@
 
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
 
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+(add-hook 'web-mode-hook
+          (lambda ()
+            (when (string-equal "tsx" (file-name-extension buffer-file-name))
+              (setup-tide-mode))))
+
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (column-number-mode)
