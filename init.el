@@ -17,6 +17,8 @@
 (setq solidity-flycheck-solium-checker-active t)
 (setq flycheck-solidity-solium-soliumrcfile "/home/fgimenez/.soliumrc.json")
 
+(setq flycheck-python-pycompile-executable "python3")
+
 (require 'package)
 (defvar package-list)
 (setq package-list '(auto-complete magit jump inflections findr web-mode yaml-mode flycheck feature-mode markdown-mode json-mode go-mode go-autocomplete jedi dockerfile-mode solidity-mode rust-mode flycheck-rust racer company terraform-mode tide))
@@ -121,7 +123,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (terraform-mode yaml-mode web-mode solidity-mode racer markdown-mode magit jump json-mode jedi go-mode go-autocomplete flycheck-rust feature-mode dockerfile-mode company))))
+    (rjsx-mode terraform-mode yaml-mode web-mode solidity-mode racer markdown-mode magit jump json-mode jedi go-mode go-autocomplete flycheck-rust feature-mode dockerfile-mode company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
