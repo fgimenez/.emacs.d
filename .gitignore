@@ -7,3 +7,5 @@ tramp
 flycheck-init.el
 .python-environments
 eshell
+transient/
+network-security.data
