@@ -16,7 +16,7 @@
 (require 'package)
 
 (defvar package-list)
-(setq package-list '(auto-complete magit jump inflections findr web-mode yaml-mode flycheck feature-mode markdown-mode json-mode go-mode jedi dockerfile-mode rust-mode flycheck-rust racer company terraform-mode tide toml-mode lsp-mode use-package))
+(setq package-list '(auto-complete magit jump inflections findr web-mode yaml-mode flycheck feature-mode markdown-mode json-mode go-mode jedi dockerfile-mode rust-mode flycheck-rust racer company terraform-mode tide toml-mode lsp-mode use-package bazel-mode))
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("elpa" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
