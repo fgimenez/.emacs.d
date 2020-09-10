@@ -11,18 +11,13 @@
 (setq-default yaml-indent-offset 2)
 (setq-default js-indent-level 2)
 
-(setq solidity-solc-path "/usr/bin/solc")
-(setq solidity-flycheck-solc-checker-active t)
-(setq solidity-solium-path "/home/fgimenez/.nvm/versions/node/v8.0.0/bin/solium")
-(setq solidity-flycheck-solium-checker-active t)
-(setq flycheck-solidity-solium-soliumrcfile "/home/fgimenez/.soliumrc.json")
-
 (setq flycheck-python-pycompile-executable "python3")
 
 (require 'package)
+
 (defvar package-list)
-(setq package-list '(auto-complete magit jump inflections findr web-mode yaml-mode flycheck feature-mode markdown-mode json-mode go-mode go-autocomplete jedi dockerfile-mode solidity-mode rust-mode flycheck-rust racer company terraform-mode tide toml-mode jinja2-mode))
-(setq package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")
+(setq package-list '(auto-complete magit jump inflections findr web-mode yaml-mode flycheck feature-mode markdown-mode json-mode go-mode jedi dockerfile-mode rust-mode flycheck-rust racer company terraform-mode tide toml-mode lsp-mode use-package))
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("elpa" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")))
@@ -43,39 +38,106 @@
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
 (add-to-list 'auto-mode-alist '("Dockerfile$" . dockerfile-mode))
-(add-to-list 'auto-mode-alist '("\\.j2$" . jinja2-mode))
+;;(add-to-list 'auto-mode-alist '("\\.j2$" . jinja2-mode))
 
 (require 'auto-complete)
-(require 'go-autocomplete)
-(require 'solidity-mode)
 
 (global-auto-complete-mode t)
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)
-(make-directory "~/.virtualenvs" t)
-(setq jedi:environment-root "~/.virtualenvs/python3-base")
-(setq jedi:environment-virtualenv
-      (list "virtualenv" "-p" "/usr/bin/python3" "--system-site-packages"))
+;;;;;;;;;;;;;;;;;;
+;; Golang settings
+;;;;;;;;;;;;;;;;;;
 
-(defun my-go-mode-hook ()
-  ; Use goimports instead of go-fmt
-  (setq gofmt-command "goimports")
-  ; Call Gofmt before saving
-  (add-hook 'before-save-hook 'gofmt-before-save)
-  ; Godef jump key binding
-  (local-set-key (kbd "M-.") 'godef-jump))
-  ; Customize compile command to run go build
-  (if (not (string-match "go" compile-command))
-      (set (make-local-variable 'compile-command)
-           "go build -v && go test -v && go vet"))
-(add-hook 'go-mode-hook 'my-go-mode-hook)
+(setq lsp-gopls-staticcheck t)
+(setq lsp-eldoc-render-all t)
+(setq lsp-gopls-complete-unimported t)
 
-(with-eval-after-load 'rust-mode
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
-(add-hook 'rust-mode-hook #'racer-mode)
+(use-package lsp-mode
+             :ensure t
+             :commands (lsp lsp-deferred)
+             :hook (go-mode . lsp-deferred))
+
+;;Set up before-save hooks to format buffer and add/delete imports.
+;;Make sure you don't have other gofmt/goimports hooks enabled.
+
+(defun lsp-go-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
+;;Optional - provides fancier overlays.
+
+(use-package lsp-ui
+             :ensure t
+             :commands lsp-ui-mode
+             :init
+             )
+
+;;Company mode is a standard completion package that works well with lsp-mode.
+;;company-lsp integrates company mode completion with lsp-mode.
+;;completion-at-point also works out of the box but doesn't support snippets.
+
+(use-package company
+             :ensure t
+             :config
+             (setq company-idle-delay 0)
+             (setq company-minimum-prefix-length 1))
+
+(use-package company-lsp
+             :ensure t
+             :commands company-lsp)
+
+;;Optional - provides snippet support.
+
+(use-package yasnippet
+             :ensure t
+             :commands yas-minor-mode
+             :hook (go-mode . yas-minor-mode))
+
+;;lsp-ui-doc-enable is false because I don't like the popover that shows up on the right
+;;I'll change it if I want it back
+
+(setq lsp-ui-doc-enable nil
+      lsp-ui-peek-enable t
+      lsp-ui-sideline-enable t
+      lsp-ui-imenu-enable t
+            lsp-ui-flycheck-enable t)
+
+(defun custom-go-mode ()
+  (display-line-numbers-mode 1))
+
+(use-package go-mode
+  :defer t
+  :ensure t
+  :mode ("\\.go\\'" . go-mode)
+  :init
+  (setq compile-command "echo Building... && go build -v && echo Testing... && go test -v && echo Linter... && golint")
+  (setq compilation-read-command nil)
+  (add-hook 'go-mode-hook 'custom-go-mode)
+  :bind (("M-," . compile)
+         ("M-." . godef-jump)))
+
+(setq compilation-window-height 14)
+(defun my-compilation-hook ()
+  (when (not (get-buffer-window "*compilation*"))
+    (save-selected-window
+      (save-excursion
+        (let* ((w (split-window-vertically))
+               (h (window-height w)))
+          (select-window w)
+          (switch-to-buffer "*compilation*")
+          (shrink-window (- h compilation-window-height)))))))
+(add-hook 'compilation-mode-hook 'my-compilation-hook)
+
+(global-set-key (kbd "C-c C-c") 'comment-or-uncomment-region)
+(setq compilation-scroll-output t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;; end of Golang settings
+;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (add-hook 'racer-mode-hook #'eldoc-mode)
 (add-hook 'racer-mode-hook #'company-mode)
 (require 'rust-mode)
@@ -115,6 +177,10 @@
 
 (load-theme 'tsdh-dark)
 
+(global-set-key "\C-xp" (lambda ()
+                          (interactive)
+                          (other-window -1)))
+
 (provide 'init)
 ;;; init.el ends here
 (custom-set-variables
@@ -124,14 +190,10 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (jinja2-mode toml-mode rjsx-mode terraform-mode yaml-mode web-mode solidity-mode racer markdown-mode magit jump json-mode jedi go-mode go-autocomplete flycheck-rust feature-mode dockerfile-mode company))))
+    (yaml-mode web-mode toml-mode rust-mode markdown-mode json-mode go-mode flycheck findr feature-mode dockerfile-mode company auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
-(global-set-key "\C-xp" (lambda ()
-                          (interactive)
-                          (other-window -1)))
