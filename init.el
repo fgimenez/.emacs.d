@@ -16,11 +16,12 @@
 (require 'package)
 
 (defvar package-list)
-(setq package-list '(auto-complete magit jump inflections findr web-mode yaml-mode flycheck feature-mode markdown-mode json-mode go-mode jedi dockerfile-mode rust-mode flycheck-rust racer company terraform-mode tide toml-mode lsp-mode use-package bazel-mode))
+(setq package-list '(auto-complete magit jump inflections findr web-mode yaml-mode flycheck feature-mode markdown-mode json-mode go-mode jedi dockerfile-mode rustic flycheck-rust racer company terraform-mode tide toml-mode lsp-mode use-package bazel-mode))
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("elpa" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")))
+
 (package-initialize)
 
 (when (not package-archive-contents)
@@ -41,7 +42,7 @@
 ;;(add-to-list 'auto-mode-alist '("\\.j2$" . jinja2-mode))
 
 (require 'auto-complete)
-
+(use-package rustic)
 (global-auto-complete-mode t)
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
@@ -140,8 +141,6 @@
 
 (add-hook 'racer-mode-hook #'eldoc-mode)
 (add-hook 'racer-mode-hook #'company-mode)
-(require 'rust-mode)
-(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
 (setq company-tooltip-align-annotations t)
 
 (defun setup-tide-mode ()
@@ -190,7 +189,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (yaml-mode web-mode toml-mode rust-mode markdown-mode json-mode go-mode flycheck findr feature-mode dockerfile-mode company auto-complete))))
+    (yasnippet company-lsp lsp-ui bazel-mode use-package lsp-mode toml-mode tide terraform-mode company racer flycheck-rust rustic dockerfile-mode jedi go-mode json-mode markdown-mode feature-mode flycheck yaml-mode web-mode jump magit auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
