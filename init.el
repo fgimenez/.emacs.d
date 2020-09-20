@@ -39,11 +39,12 @@
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
 (add-to-list 'auto-mode-alist '("Dockerfile$" . dockerfile-mode))
-;;(add-to-list 'auto-mode-alist '("\\.j2$" . jinja2-mode))
 
 (require 'auto-complete)
-(use-package rustic)
 (global-auto-complete-mode t)
+
+(use-package rustic)
+(add-hook 'before-save-hook 'rustic-format-buffer)
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
@@ -154,9 +155,6 @@
   ;; install it separately via package-install
   ;; `M-x package-install [ret] company`
   (company-mode +1))
-
-;; aligns annotation to the right hand side
-(setq company-tooltip-align-annotations t)
 
 ;; formats the buffer before saving
 (add-hook 'before-save-hook 'tide-format-before-save)
