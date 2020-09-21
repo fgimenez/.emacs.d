@@ -22,10 +22,6 @@
 (load-user-file "~/.emacs.d/lisp/common.el")
 
 
-;;;;;;;;;;;;;;;;;;
-;; Golang settings
-;;;;;;;;;;;;;;;;;;
-
 (setq lsp-gopls-staticcheck t)
 (setq lsp-eldoc-render-all t)
 (setq lsp-gopls-complete-unimported t)
