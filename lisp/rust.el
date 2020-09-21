@@ -6,7 +6,9 @@
   (add-hook 'before-save-hook #'rustic-format-buffer)
   (add-hook 'racer-mode-hook #'eldoc-mode)
   (add-hook 'racer-mode-hook #'company-mode)
-  (setq company-tooltip-align-annotations t))
+  (setq company-tooltip-align-annotations t)
+  :bind (("C-c C-c" . rustic-compile)
+         ("C-c C-r" . rustic-cargo-run)))
 
 (provide 'rust)
 ;;; rust.el ends here
