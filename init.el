@@ -1,44 +1,23 @@
 ;;; package --- Summary
 ;;; Code:
 ;;; Commentary:
-(global-font-lock-mode 1)
 
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 2)
-(setq tab-stop-list (number-sequence 2 200 2))
-(setq indent-line-function 'insert-tab)
+; load files from ~/.emacs.d/lisp
+(defconst user-init-dir
+  (cond ((boundp 'user-emacs-directory)
+	 user-emacs-directory)
+	((boundp 'user-init-directory)
+	 user-init-directory)
+	        (t "~/.emacs.d/lisp")))
 
-(setq-default yaml-indent-offset 2)
-(setq-default js-indent-level 2)
+(defun load-user-file (file)
+  (interactive "f")
+  "Load a file in current user's configuration directory"
+    (load-file (expand-file-name file user-init-dir)))
 
-(setq flycheck-python-pycompile-executable "python3")
-
-(require 'package)
-
-(defvar package-list)
-(setq package-list '(auto-complete magit jump inflections findr web-mode yaml-mode flycheck feature-mode markdown-mode json-mode go-mode jedi dockerfile-mode rustic flycheck-rust racer company terraform-mode tide toml-mode lsp-mode use-package bazel-mode))
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("elpa" . "http://tromey.com/elpa/")
-                         ("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")))
-
-(package-initialize)
-
-(when (not package-archive-contents)
-  (package-refresh-contents))
-
-(dolist (package package-list)
-  (when (not (package-installed-p package))
-    (package-install package)))
-
-(add-to-list 'auto-mode-alist '("\\.rhtml$" . html-mode))
-(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
-(add-to-list 'auto-mode-alist '("\\.yaml\\." . yaml-mode))
-(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
-(add-to-list 'auto-mode-alist '("Dockerfile$" . dockerfile-mode))
+(load-user-file "~/.emacs.d/lisp/basic.el")
+(load-user-file "~/.emacs.d/lisp/packages.el")
+(load-user-file "~/.emacs.d/lisp/file-extensions.el")
 
 (require 'auto-complete)
 (global-auto-complete-mode t)
