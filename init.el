@@ -18,13 +18,9 @@
 (load-user-file "~/.emacs.d/lisp/basic.el")
 (load-user-file "~/.emacs.d/lisp/packages.el")
 (load-user-file "~/.emacs.d/lisp/file-extensions.el")
+(load-user-file "~/.emacs.d/lisp/rust.el")
 (load-user-file "~/.emacs.d/lisp/common.el")
 
-(use-package rustic)
-(add-hook 'before-save-hook 'rustic-format-buffer)
-(add-hook 'racer-mode-hook #'eldoc-mode)
-(add-hook 'racer-mode-hook #'company-mode)
-(setq company-tooltip-align-annotations t)
 
 ;;;;;;;;;;;;;;;;;;
 ;; Golang settings
