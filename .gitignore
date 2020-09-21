@@ -4,7 +4,7 @@ auto-save-list
 *dat
 url
 tramp
-flycheck-init.el
+flycheck*init.el
 .python-environments
 eshell
 transient/
