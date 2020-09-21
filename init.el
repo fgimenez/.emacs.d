@@ -18,14 +18,13 @@
 (load-user-file "~/.emacs.d/lisp/basic.el")
 (load-user-file "~/.emacs.d/lisp/packages.el")
 (load-user-file "~/.emacs.d/lisp/file-extensions.el")
-
-(require 'auto-complete)
-(global-auto-complete-mode t)
+(load-user-file "~/.emacs.d/lisp/common.el")
 
 (use-package rustic)
 (add-hook 'before-save-hook 'rustic-format-buffer)
-
-(add-hook 'after-init-hook #'global-flycheck-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+(add-hook 'racer-mode-hook #'company-mode)
+(setq company-tooltip-align-annotations t)
 
 ;;;;;;;;;;;;;;;;;;
 ;; Golang settings
@@ -113,15 +112,10 @@
 (add-hook 'compilation-mode-hook 'my-compilation-hook)
 
 (global-set-key (kbd "C-c C-c") 'comment-or-uncomment-region)
-(setq compilation-scroll-output t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; end of Golang settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(add-hook 'racer-mode-hook #'eldoc-mode)
-(add-hook 'racer-mode-hook #'company-mode)
-(setq company-tooltip-align-annotations t)
 
 (defun setup-tide-mode ()
   (interactive)
@@ -147,15 +141,6 @@
             (when (string-equal "tsx" (file-name-extension buffer-file-name))
               (setup-tide-mode))))
 
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-(column-number-mode)
-
-(load-theme 'tsdh-dark)
-
-(global-set-key "\C-xp" (lambda ()
-                          (interactive)
-                          (other-window -1)))
 
 (provide 'init)
 ;;; init.el ends here
