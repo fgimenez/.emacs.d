@@ -8,9 +8,7 @@
 (setq lsp-eldoc-render-all t)
 (use-package lsp-ui
              :ensure t
-             :commands lsp-ui-mode
-             :init
-             )
+             :commands lsp-ui-mode)
 
 ;;Company mode is a standard completion package that works well with lsp-mode.
 ;;company-lsp integrates company mode completion with lsp-mode.
