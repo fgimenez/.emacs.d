@@ -17,7 +17,6 @@
 
 (load-user-file "~/.emacs.d/lisp/basic.el")
 (load-user-file "~/.emacs.d/lisp/packages.el")
-(load-user-file "~/.emacs.d/lisp/file-extensions.el")
 (load-user-file "~/.emacs.d/lisp/lsp.el")
 (load-user-file "~/.emacs.d/lisp/rust.el")
 (load-user-file "~/.emacs.d/lisp/golang.el")
