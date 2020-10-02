@@ -37,7 +37,7 @@
       lsp-ui-peek-enable t
       lsp-ui-sideline-enable t
       lsp-ui-imenu-enable t
-            lsp-ui-flycheck-enable t)
+      lsp-ui-flycheck-enable t)
 
 (provide 'lsp)
 ;;; lsp.el ends here
