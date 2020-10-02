@@ -21,6 +21,13 @@
           (switch-to-buffer "*compilation*")
           (shrink-window (- h compilation-window-height)))))))
 
+;; TODO(abrahms): maybe gopath isn't setup??
+(use-package golint
+  :requires go-mode
+  :hook go-mode
+  :init
+  (add-to-list 'load-path (expand-file-name "~/src/golang.org/x/lint/misc/emacs")))
+
 (use-package go-mode
   :defer t
   :ensure t

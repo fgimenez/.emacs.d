@@ -4,7 +4,9 @@
 (require 'auto-complete)
 (global-auto-complete-mode t)
 
-(add-hook 'after-init-hook #'global-flycheck-mode)
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 

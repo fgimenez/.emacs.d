@@ -30,11 +30,7 @@
              :commands yas-minor-mode
              :hook (go-mode . yas-minor-mode))
 
-;;lsp-ui-doc-enable is false because I don't like the popover that shows up on the right
-;;I'll change it if I want it back
-
-(setq lsp-ui-doc-enable nil
-      lsp-ui-peek-enable t
+(setq lsp-ui-peek-enable t
       lsp-ui-sideline-enable t
       lsp-ui-imenu-enable t
       lsp-ui-flycheck-enable t)
