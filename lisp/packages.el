@@ -18,6 +18,7 @@
                      json-mode
                      jump
                      lsp-mode
+                     lsp-ui
                      magit
                      markdown-mode
                      racer
