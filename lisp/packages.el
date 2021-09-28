@@ -7,6 +7,7 @@
 (defvar package-list)
 (setq package-list '(auto-complete
                      bazel-mode
+                     coffee-mode
                      company
                      dockerfile-mode
                      feature-mode
