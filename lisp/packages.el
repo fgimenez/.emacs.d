@@ -24,6 +24,8 @@
                      markdown-mode
                      racer
                      rustic
+                     solidity-flycheck
+                     solidity-mode
                      terraform-mode
                      tide
                      toml-mode
