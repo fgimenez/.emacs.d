@@ -6,7 +6,8 @@
 
 (defvar package-list)
 (setq package-list '(auto-complete
-                     bazel-mode
+                     ;bazel-mode
+                     coffee-mode
                      company
                      dockerfile-mode
                      feature-mode
@@ -24,6 +25,8 @@
                      protobuf-mode
                      racer
                      rustic
+                     solidity-flycheck
+                     solidity-mode
                      terraform-mode
                      tide
                      toml-mode
