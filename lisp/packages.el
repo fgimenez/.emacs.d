@@ -21,6 +21,7 @@
                      lsp-ui
                      magit
                      markdown-mode
+                     protobuf-mode
                      racer
                      rustic
                      terraform-mode
