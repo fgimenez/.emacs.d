@@ -10,3 +10,4 @@ eshell
 transient/
 network-security.data
 .lsp-session*
+.cache/*
