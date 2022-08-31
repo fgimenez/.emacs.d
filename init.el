@@ -36,7 +36,9 @@
  '(coffee-tab-width 2)
  '(flycheck-checker-error-threshold nil)
  '(package-selected-packages
-   '(cargo yasnippet company-lsp lsp-ui bazel-mode use-package lsp-mode toml-mode tide terraform-mode company racer flycheck-rust rustic dockerfile-mode jedi go-mode json-mode markdown-mode feature-mode flycheck yaml-mode web-mode jump magit auto-complete)))
+   '(cargo yasnippet company-lsp lsp-ui bazel-mode use-package lsp-mode toml-mode tide terraform-mode company racer flycheck-rust rustic dockerfile-mode jedi go-mode json-mode markdown-mode feature-mode flycheck yaml-mode web-mode jump magit auto-complete))
+ '(warning-suppress-log-types '((comp) (comp) (comp)))
+ '(warning-suppress-types '((comp) (comp) (comp) (comp) (comp) (comp) (comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
