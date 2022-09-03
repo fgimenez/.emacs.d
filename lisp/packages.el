@@ -18,6 +18,7 @@
                      jedi
                      json-mode
                      jump
+                     just-mode
                      lsp-mode
                      lsp-ui
                      magit
