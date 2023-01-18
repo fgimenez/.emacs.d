@@ -8,9 +8,6 @@
   :ensure t
   :init (global-flycheck-mode))
 
-(with-eval-after-load 'flycheck
-  (add-hook 'flycheck-mode-hook #'flycheck-inline-mode))
-
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (column-number-mode)

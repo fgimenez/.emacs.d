@@ -13,7 +13,6 @@
                      feature-mode
                      findr
                      flycheck
-                     flycheck-inline
                      go-mode
                      inflections
                      jedi
