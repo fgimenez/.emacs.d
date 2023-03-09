@@ -3,6 +3,7 @@
 ;;; Commentary:
 
 (global-font-lock-mode 1)
+(global-display-line-numbers-mode)
 
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
