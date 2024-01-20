@@ -23,6 +23,7 @@
                      lsp-ui
                      magit
                      markdown-mode
+                     move-mode
                      protobuf-mode
                      racer
                      rustic
