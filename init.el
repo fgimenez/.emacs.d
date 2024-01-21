@@ -23,6 +23,7 @@
 (load-user-file "~/.emacs.d/lisp/typescript.el")
 (load-user-file "~/.emacs.d/lisp/common.el")
 (load-user-file "~/.emacs.d/lisp/coffee.el")
+(load-user-file "~/.emacs.d/lisp/move.el")
 
 (provide 'init)
 ;;; init.el ends here
