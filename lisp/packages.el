@@ -6,8 +6,6 @@
 
 (defvar package-list)
 (setq package-list '(auto-complete
-                     ;bazel-mode
-                     coffee-mode
                      company
                      dockerfile-mode
                      feature-mode
@@ -15,22 +13,18 @@
                      flycheck
                      go-mode
                      inflections
-                     jedi
                      json-mode
                      jump
-                     just-mode
                      lsp-mode
                      lsp-ui
                      magit
                      markdown-mode
-                     move-mode
                      protobuf-mode
                      racer
                      rustic
                      solidity-flycheck
                      solidity-mode
                      terraform-mode
-                     tide
                      toml-mode
                      use-package
                      web-mode
