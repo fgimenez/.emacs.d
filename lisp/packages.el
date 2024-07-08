@@ -25,7 +25,9 @@
                      solidity-flycheck
                      solidity-mode
                      terraform-mode
+                     tide
                      toml-mode
+                     typescript-mode
                      use-package
                      web-mode
                      yaml-mode))
