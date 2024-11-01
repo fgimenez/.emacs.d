@@ -1,23 +1,11 @@
 ;;; package --- Summary
 ;;; Code:
 ;;; Commentary:
-(defun lsp-rust-install-save-hooks ()
-  (add-hook 'racer-mode-hook #'eldoc-mode))
+;; Enable straight.el for package management
+;; Performance optimizations
+(setq gc-cons-threshold 100000000)  ; Increase garbage collection threshold
+(setq read-process-output-max (* 1024 1024)) ; Increase read chunk size for better LSP performance
 
-(add-hook 'rustic-mode-hook #'lsp-rust-install-save-hooks)
-
-(use-package flycheck
-  :ensure t
-  :init (global-flycheck-mode))
-
-(use-package flycheck-popup-tip
-  :ensure t
-  :after flycheck
-  :hook (flycheck-mode . flycheck-popup-tip-mode)
-  :config
-  (setq flycheck-popup-tip-error-prefix "✖ "))
-
-;; Disable LSP UI sideline for errors to avoid conflict
 (use-package lsp-ui
   :ensure t
   :config
@@ -25,8 +13,9 @@
   (setq lsp-ui-doc-enable t)         ; Keep documentation enabled
   (setq lsp-ui-doc-position 'at-point))
 
+;; Install and configure rustic
 (use-package rustic
-  :ensure
+  :ensure t
   :bind (:map rustic-mode-map
               ("M-j" . lsp-ui-imenu)
               ("M-?" . lsp-find-references)
@@ -37,26 +26,42 @@
               ("C-c C-c Q" . lsp-workspace-shutdown)
               ("C-c C-c s" . lsp-rust-analyzer-status))
   :config
-  (setq eldoc-documentation-functions nil)
-  (setq lsp-enable-symbol-highlighting t)
-  (setq lsp-signature-auto-activate nil)
-
   (setq rustic-format-on-save t)
-  (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook)
-  :custom
-  (rustic-rustfmt-config-alist '((edition . "2021"))))
+  (setq rustic-lsp-server 'rust-analyzer)  ; Use rust-analyzer as the LSP server
+  (setq rustic-analyzer-command '("rust-analyzer"))
 
-(defun rk/rustic-mode-hook ()
-  ;; so that run C-c C-c C-r works without having to confirm, but don't try to
-  ;; save rust buffers that are not file visiting. Once
-  ;; https://github.com/brotzeit/rustic/issues/253 has been resolved this should
-  ;; no longer be necessary.
-  (when buffer-file-name
-    (setq-local buffer-save-without-query t)))
+  ;; Performance optimizations for rustic
+  (setq rustic-analyzer-config
+        '((checkOnSave . ((command . "clippy")))
+          (cargo . ((allFeatures . t)))
+          (procMacro . ((enable . t)))
+          (diagnostics . ((disabled . ["unresolved-proc-macro"]))))) ; Disable costly proc-macro resolution
+  :hook ((rustic-mode . lsp-deferred)))
 
-(add-hook 'rustic-mode-hook
-          (lambda ()
-            (setq-local flycheck-checker 'rustic-clippy)))
+;; LSP Mode configuration
+(use-package lsp-mode
+  :ensure t
+  :commands lsp
+  :config
+  ;; Performance optimizations for LSP
+  (setq lsp-idle-delay 0.500)  ; Delay before starting analysis
+  (setq lsp-log-io nil)        ; Disable logging for better performance
+  (setq lsp-completion-provider :capf)  ; Use capf for completion
+  (setq lsp-prefer-flymake nil)         ; Use flycheck instead of flymake
+
+  ;; Rust specific LSP configurations
+  (setq lsp-rust-analyzer-server-display-inlay-hints t)
+  (setq lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
+  (setq lsp-rust-analyzer-display-chaining-hints t)
+  (setq lsp-rust-analyzer-display-closure-return-type-hints t))
+
+;; Flycheck for syntax checking
+(use-package flycheck
+  :hook (rustic-mode . flycheck-mode))
+
+;; Optional: Add cargo commands integration
+(use-package cargo
+  :hook (rustic-mode . cargo-minor-mode))
 
 (provide 'rust)
 ;;; rust.el ends here
