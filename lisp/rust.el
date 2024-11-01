@@ -12,7 +12,11 @@
 
 (use-package flycheck-popup-tip
   :ensure t
-  :hook (flycheck-mode . flycheck-popup-tip-mode))
+  :after flycheck
+  :hook (flycheck-mode . flycheck-popup-tip-mode)
+  :config
+  (setq flycheck-popup-tip-error-prefix "✖ ")
+  (setq flycheck-popup-tip-warning-prefix "⚠ "))
 
 ;; Disable LSP UI sideline for errors to avoid conflict
 (use-package lsp-ui
