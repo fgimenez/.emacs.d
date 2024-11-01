@@ -6,6 +6,22 @@
 
 (add-hook 'rustic-mode-hook #'lsp-rust-install-save-hooks)
 
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+
+(use-package flycheck-popup-tip
+  :ensure t
+  :hook (flycheck-mode . flycheck-popup-tip-mode))
+
+;; Disable LSP UI sideline for errors to avoid conflict
+(use-package lsp-ui
+  :ensure t
+  :config
+  (setq lsp-ui-sideline-enable nil)  ; Disable the sideline
+  (setq lsp-ui-doc-enable t)         ; Keep documentation enabled
+  (setq lsp-ui-doc-position 'at-point))
+
 (use-package rustic
   :ensure
   :bind (:map rustic-mode-map
@@ -18,12 +34,10 @@
               ("C-c C-c Q" . lsp-workspace-shutdown)
               ("C-c C-c s" . lsp-rust-analyzer-status))
   :config
-  ;; uncomment for less flashiness
-  ;; (setq lsp-eldoc-hook nil)
-  ;; (setq lsp-enable-symbol-highlighting nil)
-  ;; (setq lsp-signature-auto-activate nil)
+  (setq lsp-eldoc-hook nil)
+  (setq lsp-enable-symbol-highlighting t)
+  (setq lsp-signature-auto-activate nil)
 
-  ;; comment to disable rustfmt on save
   (setq rustic-format-on-save t)
   (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook)
   :custom
@@ -36,6 +50,10 @@
   ;; no longer be necessary.
   (when buffer-file-name
     (setq-local buffer-save-without-query t)))
+
+(add-hook 'rustic-mode-hook
+          (lambda ()
+            (setq-local flycheck-checker 'rustic-clippy)))
 
 (provide 'rust)
 ;;; rust.el ends here

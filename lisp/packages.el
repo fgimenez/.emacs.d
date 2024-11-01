@@ -11,6 +11,7 @@
                      feature-mode
                      findr
                      flycheck
+                     flycheck-popup-tip
                      go-mode
                      inflections
                      json-mode
