@@ -15,8 +15,7 @@
   :after flycheck
   :hook (flycheck-mode . flycheck-popup-tip-mode)
   :config
-  (setq flycheck-popup-tip-error-prefix "✖ ")
-  (setq flycheck-popup-tip-warning-prefix "⚠ "))
+  (setq flycheck-popup-tip-error-prefix "✖ "))
 
 ;; Disable LSP UI sideline for errors to avoid conflict
 (use-package lsp-ui
@@ -38,7 +37,7 @@
               ("C-c C-c Q" . lsp-workspace-shutdown)
               ("C-c C-c s" . lsp-rust-analyzer-status))
   :config
-  (setq lsp-eldoc-hook nil)
+  (setq eldoc-documentation-functions nil)
   (setq lsp-enable-symbol-highlighting t)
   (setq lsp-signature-auto-activate nil)
 
