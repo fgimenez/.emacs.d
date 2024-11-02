@@ -36,7 +36,9 @@
           (cargo . ((allFeatures . t)))
           (procMacro . ((enable . t)))
           (diagnostics . ((disabled . ["unresolved-proc-macro"]))))) ; Disable costly proc-macro resolution
-  :hook ((rustic-mode . lsp-deferred)))
+  :hook ((rustic-mode . lsp-deferred))
+  :custom
+  (rustic-rustfmt-config-alist '((edition . "2021"))))
 
 ;; LSP Mode configuration
 (use-package lsp-mode
