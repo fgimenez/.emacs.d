@@ -50,6 +50,10 @@
   (setq lsp-log-io nil)        ; Disable logging for better performance
   (setq lsp-completion-provider :capf)  ; Use capf for completion
   (setq lsp-prefer-flymake nil)         ; Use flycheck instead of flymake
+  (setq lsp-auto-guess-root t)
+  (setq lsp-root-dir-matcher "Cargo.toml")
+  (setq lsp-rust-analyzer-cargo-watch-enable t)
+  (setq lsp-rust-analyzer-proc-macro-enable t)
 
   ;; Rust specific LSP configurations
   (setq lsp-rust-analyzer-server-display-inlay-hints t)
@@ -64,6 +68,9 @@
 ;; Optional: Add cargo commands integration
 (use-package cargo
   :hook (rustic-mode . cargo-minor-mode))
+
+(setq rustic-lsp-client 'lsp-mode)
+(setq rustic-workspace-dir (lambda () (projectile-project-root)))
 
 (provide 'rust)
 ;;; rust.el ends here
