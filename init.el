@@ -15,6 +15,7 @@
   "Load a file in current user's configuration directory"
     (load-file (expand-file-name file user-init-dir)))
 
+(load-user-file "~/.emacs.d/lisp/async.el")
 (load-user-file "~/.emacs.d/lisp/basic.el")
 (load-user-file "~/.emacs.d/lisp/packages.el")
 (load-user-file "~/.emacs.d/lisp/file-extensions.el")

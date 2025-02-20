@@ -5,7 +5,8 @@
 (require 'package)
 
 (defvar package-list)
-(setq package-list '(auto-complete
+(setq package-list '(async
+                     auto-complete
                      company
                      dockerfile-mode
                      feature-mode
