@@ -3,8 +3,16 @@
 ;;; Commentary:
 ;; Enable straight.el for package management
 ;; Performance optimizations
-(setq gc-cons-threshold 100000000)  ; Increase garbage collection threshold
-(setq read-process-output-max (* 1024 1024)) ; Increase read chunk size for better LSP performance
+;; Increase garbage collection thresholds
+(setq gc-cons-threshold (* 100 1024 1024)   ; 100mb
+      gc-cons-percentage 0.6)
+
+;; Increase the amount of data read from processes in a single chunk
+(setq read-process-output-max (* 1024 1024)) ; 1mb
+
+;; Add LSP performance optimizations
+(setq lsp-idle-delay 0.2)
+(setq lsp-response-timeout 5)  ; Increase timeout for responses
 
 (use-package lsp-ui
   :ensure t
@@ -46,20 +54,26 @@
   :commands lsp
   :config
   ;; Performance optimizations for LSP
-  (setq lsp-idle-delay 0.500)  ; Delay before starting analysis
-  (setq lsp-log-io nil)        ; Disable logging for better performance
-  (setq lsp-completion-provider :capf)  ; Use capf for completion
-  (setq lsp-prefer-flymake nil)         ; Use flycheck instead of flymake
-  (setq lsp-auto-guess-root t)
-  (setq lsp-root-dir-matcher "Cargo.toml")
-  (setq lsp-rust-analyzer-cargo-watch-enable t)
-  (setq lsp-rust-analyzer-proc-macro-enable t)
+  (setq lsp-idle-delay 0.2)                 ; Reduce delay but not too much
+  (setq lsp-completion-provider :capf)
+  (setq lsp-lens-enable nil)                ; Disable lens for better performance
+  (setq lsp-headerline-breadcrumb-enable nil) ; Disable breadcrumb - optional but helps
+  (setq lsp-signature-auto-activate nil)     ; Disable automatic signatures
+  (setq lsp-signature-render-documentation nil) ; Disable doc rendering in signatures
 
-  ;; Rust specific LSP configurations
-  (setq lsp-rust-analyzer-server-display-inlay-hints t)
-  (setq lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
-  (setq lsp-rust-analyzer-display-chaining-hints t)
-  (setq lsp-rust-analyzer-display-closure-return-type-hints t))
+  ;; Rust analyzer specific optimizations
+  (setq lsp-rust-analyzer-server-command '("rust-analyzer"))
+  (setq lsp-rust-analyzer-cargo-watch-command "clippy")
+  (setq lsp-rust-analyzer-cargo-run-build-scripts t)
+  (setq lsp-rust-analyzer-max-inlay-hint-length 50)
+  (setq lsp-rust-analyzer-display-parameter-hints nil) ; Disable parameter hints
+  (setq lsp-rust-analyzer-display-closure-return-type-hints nil) ; Disable closure return type hints
+
+  (setq lsp-enable-file-watchers nil)         ; Disable file watchers
+  (setq lsp-enable-semantic-highlighting nil)  ; Disable semantic highlighting
+  (setq lsp-enable-indentation nil)           ; Disable indentation
+  (setq lsp-enable-on-type-formatting nil)    ; Disable on-type formatting
+  )
 
 ;; Flycheck for syntax checking
 (use-package flycheck
@@ -69,6 +83,14 @@
 (use-package cargo
   :hook (rustic-mode . cargo-minor-mode))
 
+(setq rustic-analyzer-command '("rust-analyzer"))
+(setq rustic-analyzer-config
+      '((checkOnSave . ((command . "clippy")))
+        (cargo . ((allFeatures . t)
+                 (loadOutDirsFromCheck . t)
+                 (runBuildScripts . t)))
+        (procMacro . ((enable . t)))
+        (diagnostics . ((disabled . ["unresolved-proc-macro"])))))
 (setq rustic-lsp-client 'lsp-mode)
 (setq rustic-workspace-dir (lambda () (projectile-project-root)))
 
